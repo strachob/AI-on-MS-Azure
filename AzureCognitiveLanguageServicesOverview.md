@@ -103,10 +103,17 @@
 # Text Analytics API
 
 1. **Intro**
-   1. Przedstawienie serwisu
-   2. Co to za serwis? Co robi?
+   1. Jest to serwis kognitywny którego celem jest wyciągnięcie z tekstu potrzebnych informacji. Z pomocą tego serwisu można badać język tekstu, wykrywać intencję w tekście, wybierać kluczowe słowa lub frazy oraz wykrywać znane encje.
+   2. Serwis potrafi wykrywać uczucia i przypisuje danemu tekstowi wartość pomiędzy 0 a 1. Wartości blisko 1oznaczają pozytywny tekst a wartości blisko 0 negatywny. Mamy możliwość wytrenowania modelu wyspecjalizowanego w medycynie i wtedy możemy klasyfikować terminologię medyczną.
 2. **Use cases**
-   1. w jakich przypadkach powinniśmy użyć tego serwisu - kreatywnie wasze pomysły
+   
+   1. W botach dany serwis może rozpoznawać język w zależności tego jak użytkownik się przedstawi. 
+   2. Możemy dodać go do bota i zbierać emocje użytkowników na temat produktów.
 3. **How to**
-   1. Jak użyć tego serwisu?
-   2. Pricing - ile się za niego płaci
+   
+   1. Tworzymy serwis na portal Azure lub z użyciem ARM template. Pobieramy klucz wygenerowany dla naszego serwisu. Wykonujemy zapytania na `https://[location].api.cognitive.microsoft.com/text/analytics/v2.0/sentiment` z dodaniem naszego klucza w headerze `Ocp-Apim-Subscription-Key`  i dostajemy podobną odpowiedź ![Screenshot of the section number five showing the response content.](https://docs.microsoft.com/en-us/learn/modules/classify-user-feedback-with-the-text-analytics-api/media/7-marker.png)
+   
+      Ten endpoint służy do wykrywania nastroju więc otrzymaliśmy ocenę w polu score.
+   
+   2. Pricing  jest podzielony na kilka sekcji. Stworzenie serwisu w kontenerze w darmowej wersji pozwala na 5000 transakcji  miesięcznie ale nie pozwala na rozpoznawanie encji. Duże instancje które pozwalają nam na wszystko zaczynają sie od 75 dolarów miesięcznie i pozwalają na 25 tysięcy transakcji, następnie mam 250 $/m i 100 tyś zapytań, 1000 $/m i 500 tyś zapytań. W najdroższej wersji mamy 5000 dolarów miesięcznie przy 10 mln zapytań.
+
