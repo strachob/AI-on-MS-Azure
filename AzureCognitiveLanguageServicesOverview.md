@@ -31,7 +31,7 @@
 
       Wersja Standard to 10 transakcji na sekundę i nielimitowana liczba transakcji miesięcznie w cenach przedstawionych na zdjęciu poniżej
 
-      ![image-20201028215819842](C:\Users\Bartek Strachowski\AppData\Roaming\Typora\typora-user-images\image-20201028215819842.png)
+      ![image-20201028215819842](image-20201028215819842.png)
 
 
 
@@ -76,6 +76,7 @@
 
       * Poniżej przykładowa odpowiedź LUISa
 
+        ```json
         {
           "query": "when do you open next?",
           "topScoringIntent": {
@@ -93,10 +94,11 @@
             }
           ],
           "entities": []
-        }
+     }
+        ```
 
    2. Również mamy dwa tryby użytkowania:
-
+   
       * FREE ograniczony do 5 transakcji na sekundę w tym trybie mamy 10000 zapytań tekstowych oraz milion zapytań edycyjnych.
       * Standard to 50 zapytań na sekundę oraz $1.5 za 1000 transakcji tekstowych i $5.50 za 1000 transakcji edycyjnych. 
 
