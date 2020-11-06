@@ -69,19 +69,119 @@ namespace Mov4Anyone.Dialogs
             }
 
             var luisResult = await _luisRecognizer.RecognizeAsync<Movies4Anyone>(stepContext.Context, cancellationToken);
-         
+
+           
+
             switch (luisResult.TopIntent().intent)
-            {
+            { 
+
                 case Movies4Anyone.Intent.searchMovie:
-                  
+
                     var lookupJson = await _tmdbService
                         .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchMovie.ToString()], luisResult.Entities.movie.FirstOrDefault(), null);
 
-                    var searchResult = JsonConvert.DeserializeObject<SearchResult<MovieResult>>(lookupJson);
-                    var text = string.Join(',', searchResult.Results.Select(x => x.OriginalTitle).ToList());
+                    var movieResult = JsonConvert.DeserializeObject<SearchResult<MovieResult>>(lookupJson);
+                    var text = string.Join(',', movieResult.Results.Select(x => x.OriginalTitle).ToList());
 
-                    var getWeatherMessage = MessageFactory.Text(text, text, InputHints.IgnoringInput);
-                    await stepContext.Context.SendActivityAsync(getWeatherMessage, cancellationToken);
+                    var responseCard = MessageFactory.Text(text, text, InputHints.IgnoringInput);
+                    await stepContext.Context.SendActivityAsync(responseCard, cancellationToken);
+                    break;
+
+                case Movies4Anyone.Intent.searchTV:
+
+                    lookupJson = await _tmdbService
+                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchTV.ToString()], luisResult.Entities.tv_show.FirstOrDefault(), null);
+
+                    var tvResult = JsonConvert.DeserializeObject<SearchResult<TvResult>>(lookupJson);
+                    text = string.Join(',', tvResult.Results.Select(x => x.Name).ToList());
+
+                    responseCard = MessageFactory.Text(text, text, InputHints.IgnoringInput);
+                    await stepContext.Context.SendActivityAsync(responseCard, cancellationToken);
+                    break;
+
+
+                case Movies4Anyone.Intent.searchPeople:
+
+                    lookupJson = await _tmdbService
+                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchPeople.ToString()], luisResult.Entities.person.FirstOrDefault(), null);
+
+                    var peopleResult = JsonConvert.DeserializeObject<SearchResult<PersonResult>>(lookupJson);
+                    text = string.Join(',', peopleResult.Results.SelectMany(x => x.KnownFor.Select(x => x.OriginalTitle)).ToList());
+
+                    responseCard = MessageFactory.Text(text, text, InputHints.IgnoringInput);
+                    await stepContext.Context.SendActivityAsync(responseCard, cancellationToken);
+                    break;
+
+                case Movies4Anyone.Intent.recommendMovie:
+
+                    lookupJson = await _tmdbService
+                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.recommendMovie.ToString()], "", 1);
+
+                    var movieRecoResult = JsonConvert.DeserializeObject<MovieRecommedation>(lookupJson);
+                    text = string.Join(',', movieRecoResult.Results.Select(x => x.Title).ToList());
+
+                    responseCard = MessageFactory.Text(text, text, InputHints.IgnoringInput);
+                    await stepContext.Context.SendActivityAsync(responseCard, cancellationToken);
+                    break;
+
+                case Movies4Anyone.Intent.recommendTv:
+
+                    lookupJson = await _tmdbService
+                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.recommendTv.ToString()], "", 1);
+
+                    var tvRecoResult = JsonConvert.DeserializeObject<TVRecommendation>(lookupJson);
+                    text = string.Join(',', tvRecoResult.Results.Select(x => x.Title).ToList());
+
+                    responseCard = MessageFactory.Text(text, text, InputHints.IgnoringInput);
+                    await stepContext.Context.SendActivityAsync(responseCard, cancellationToken);
+                    break;
+
+                case Movies4Anyone.Intent.movieDetails:
+
+                    lookupJson = await _tmdbService
+                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.movieDetails.ToString()], "", 1);
+
+                    var movieDetails = JsonConvert.DeserializeObject<MovieDetails>(lookupJson);
+                    text = movieDetails.Title;
+
+                    responseCard = MessageFactory.Text(text, text, InputHints.IgnoringInput);
+                    await stepContext.Context.SendActivityAsync(responseCard, cancellationToken);
+                    break;
+
+                case Movies4Anyone.Intent.tvDetails:
+
+                    lookupJson = await _tmdbService
+                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.tvDetails.ToString()], "", 1);
+
+                    var tvDetails = JsonConvert.DeserializeObject<TVDetails>(lookupJson);
+                    text = tvDetails.Name;
+
+                    responseCard = MessageFactory.Text(text, text, InputHints.IgnoringInput);
+                    await stepContext.Context.SendActivityAsync(responseCard, cancellationToken);
+                    break;
+
+                case Movies4Anyone.Intent.movieVideos:
+
+                    lookupJson = await _tmdbService
+                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.movieVideos.ToString()], "", 1);
+
+                    var movieVideos = JsonConvert.DeserializeObject<Videos>(lookupJson);
+                    text = movieVideos.Results.Where(x => x.Type.Equals("Trailer")).FirstOrDefault()?.Key;
+
+                    responseCard = MessageFactory.Text(text, text, InputHints.IgnoringInput);
+                    await stepContext.Context.SendActivityAsync(responseCard, cancellationToken);
+                    break;
+
+                case Movies4Anyone.Intent.tvVideos:
+
+                    lookupJson = await _tmdbService
+                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.tvVideos.ToString()], luisResult.Entities.person.FirstOrDefault(), null);
+
+                    var tvVideos = JsonConvert.DeserializeObject<Videos>(lookupJson);
+                    text = tvVideos.Results.Where(x => x.Type.Equals("Trailer")).FirstOrDefault()?.Key;
+
+                    responseCard = MessageFactory.Text(text, text, InputHints.IgnoringInput);
+                    await stepContext.Context.SendActivityAsync(responseCard, cancellationToken);
                     break;
 
                 default:

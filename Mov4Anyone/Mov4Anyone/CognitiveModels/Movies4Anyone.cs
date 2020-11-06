@@ -20,12 +20,16 @@ namespace Mov4Anyone.CognitiveModels
         public string AlteredText;
 
         public enum Intent {
+            movieDetails, 
+            movieVideos, 
             None, 
             recommendMovie, 
             recommendTv, 
             searchMovie, 
             searchPeople, 
-            searchTV
+            searchTV, 
+            tvDetails, 
+            tvVideos
         };
         [JsonProperty("intents")]
         public Dictionary<Intent, IntentScore> Intents;

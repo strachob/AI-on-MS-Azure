@@ -2,6 +2,14 @@
   "luis_schema_version": "7.0.0",
   "intents": [
     {
+      "name": "movieDetails",
+      "features": []
+    },
+    {
+      "name": "movieVideos",
+      "features": []
+    },
+    {
       "name": "None",
       "features": []
     },
@@ -23,6 +31,14 @@
     },
     {
       "name": "searchTV",
+      "features": []
+    },
+    {
+      "name": "tvDetails",
+      "features": []
+    },
+    {
+      "name": "tvVideos",
       "features": []
     }
   ],
@@ -119,6 +135,24 @@
           "entity": "tv show",
           "startPos": 26,
           "endPos": 30,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i want to see a bit of star wars film",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 23,
+          "endPos": 31,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 33,
+          "endPos": 36,
           "children": []
         }
       ]
@@ -221,6 +255,18 @@
           "entity": "type",
           "startPos": 28,
           "endPos": 32,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "in which year was avengers released?",
+      "intent": "movieDetails",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 18,
+          "endPos": 25,
           "children": []
         }
       ]
@@ -424,6 +470,162 @@
       ]
     },
     {
+      "text": "show me a clip of dexter tv show",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 18,
+          "endPos": 23,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 25,
+          "endPos": 31,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a clip of house",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 18,
+          "endPos": 22,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a fragment from star wars",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 24,
+          "endPos": 32,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a fragment of house",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 22,
+          "endPos": 26,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a fragment of the silence of lambs movie",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 22,
+          "endPos": 41,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 43,
+          "endPos": 47,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a fragment of the witcher series",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 22,
+          "endPos": 32,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 34,
+          "endPos": 39,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a trailer for sherlock holmes film",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 22,
+          "endPos": 36,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 38,
+          "endPos": 41,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a trailer for star wars",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 22,
+          "endPos": 30,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a trailer for star wars movie",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 22,
+          "endPos": 30,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 32,
+          "endPos": 36,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a trailer for the witcher series",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 22,
+          "endPos": 32,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 34,
+          "endPos": 39,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "show me ben affleck movies",
       "intent": "searchPeople",
       "entities": [
@@ -437,6 +639,66 @@
           "entity": "type",
           "startPos": 20,
           "endPos": 25,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me details about avengers",
+      "intent": "movieDetails",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 22,
+          "endPos": 29,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me details about house tv show",
+      "intent": "tvDetails",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 22,
+          "endPos": 26,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 28,
+          "endPos": 34,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me details about lost",
+      "intent": "tvDetails",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 22,
+          "endPos": 25,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me details about top gun movie",
+      "intent": "movieDetails",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 22,
+          "endPos": 28,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 30,
+          "endPos": 34,
           "children": []
         }
       ]
@@ -460,6 +722,42 @@
       ]
     },
     {
+      "text": "show me the trailer for lost tv series",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 24,
+          "endPos": 27,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 29,
+          "endPos": 37,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me the trailer for lost tv show",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 24,
+          "endPos": 27,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 29,
+          "endPos": 35,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "what is ben affleck in",
       "intent": "searchPeople",
       "entities": [
@@ -472,6 +770,42 @@
       ]
     },
     {
+      "text": "when house first aired?",
+      "intent": "tvDetails",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 5,
+          "endPos": 9,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "when was the witcher released?",
+      "intent": "tvDetails",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 9,
+          "endPos": 19,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "who directed mission impossible?",
+      "intent": "movieDetails",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 13,
+          "endPos": 30,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "who is nolan",
       "intent": "searchPeople",
       "entities": [
@@ -479,6 +813,30 @@
           "entity": "person",
           "startPos": 7,
           "endPos": 11,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "who is responsible for house?",
+      "intent": "tvDetails",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 23,
+          "endPos": 27,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "who is showrunning lost?",
+      "intent": "tvDetails",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 19,
+          "endPos": 22,
           "children": []
         }
       ]
