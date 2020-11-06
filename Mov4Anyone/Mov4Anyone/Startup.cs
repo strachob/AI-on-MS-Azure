@@ -37,7 +37,7 @@ namespace Mov4Anyone
 
             // Register LUIS recognizer
             services.AddSingleton<MovieRecognizer>();
-            services.AddSingleton<OMDBService>();
+            services.AddSingleton<TMDBService>();
 
             // Register the BookingDialog.
             services.AddSingleton<BookingDialog>();

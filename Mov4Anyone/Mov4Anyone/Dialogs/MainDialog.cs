@@ -13,25 +13,25 @@ using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
 using Mov4Anyone.CognitiveModels;
 using Mov4Anyone.Models;
 using Mov4Anyone.Services;
+using Newtonsoft.Json;
 
 namespace Mov4Anyone.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
         private readonly MovieRecognizer _luisRecognizer;
-        private readonly OMDBService _omdbService;
+        private readonly TMDBService _tmdbService;
         protected readonly ILogger Logger;
 
         // Dependency injection uses this constructor to instantiate MainDialog
-        public MainDialog(MovieRecognizer luisRecognizer, BookingDialog bookingDialog, ILogger<MainDialog> logger, OMDBService oMDBService)
+        public MainDialog(MovieRecognizer luisRecognizer, BookingDialog bookingDialog, ILogger<MainDialog> logger, TMDBService tmdbService)
             : base(nameof(MainDialog))
         {
             _luisRecognizer = luisRecognizer;
-            _omdbService = oMDBService;
+            _tmdbService = tmdbService;
             Logger = logger;
 
             AddDialog(new TextPrompt(nameof(TextPrompt)));
-          //  AddDialog(bookingDialog);
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
                 IntroStepAsync,
@@ -44,8 +44,10 @@ namespace Mov4Anyone.Dialogs
 
         private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var test = await _omdbService.FetchInfoForMovie();
 
+            var test0 = await _tmdbService.FetchInformation("/search/tv", "witcher", null);
+            var test = await _tmdbService.FetchInformation("/tv/{id}", "", JsonConvert.DeserializeObject<SearchResult<TvResult>>(test0).Results.First().Id);
+            var final = JsonConvert.DeserializeObject<TVDetails>(test);
             if (!_luisRecognizer.IsConfigured)
             {
                 await stepContext.Context.SendActivityAsync(
@@ -54,8 +56,7 @@ namespace Mov4Anyone.Dialogs
                 return await stepContext.NextAsync(null, cancellationToken);
             }
 
-            // Use the text provided in FinalStepAsync or the default if it is the first time.
-            var messageText = stepContext.Options?.ToString() ?? "What can I help you with today?\nSay something like \"Book a flight from Paris to Berlin on March 22, 2020\"";
+            var messageText = stepContext.Options?.ToString() ?? "Yo Yo Yo\nWhat can I help you with today?\nI know a lot about movies and tv shows!\nDon't be afraid to ask :)";
             var promptMessage = MessageFactory.Text(messageText, messageText, InputHints.ExpectingInput);
             return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
         }
@@ -64,38 +65,26 @@ namespace Mov4Anyone.Dialogs
         {
             if (!_luisRecognizer.IsConfigured)
             {
-                // LUIS is not configured, we just run the BookingDialog path with an empty BookingDetailsInstance.
                 return await stepContext.BeginDialogAsync(nameof(BookingDialog), new BookingDetails(), cancellationToken);
             }
 
-            // Call LUIS and gather any potential booking details. (Note the TurnContext has the response to the prompt.)
-            var luisResult = await _luisRecognizer.RecognizeAsync<FlightBooking>(stepContext.Context, cancellationToken);
+            var luisResult = await _luisRecognizer.RecognizeAsync<Movies4Anyone>(stepContext.Context, cancellationToken);
+         
             switch (luisResult.TopIntent().intent)
             {
-                case FlightBooking.Intent.BookFlight:
-                    await ShowWarningForUnsupportedCities(stepContext.Context, luisResult, cancellationToken);
+                case Movies4Anyone.Intent.searchMovie:
+                  
+                    var lookupJson = await _tmdbService
+                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchMovie.ToString()], luisResult.Entities.movie.FirstOrDefault(), null);
 
-                    // Initialize BookingDetails with any entities we may have found in the response.
-                    var bookingDetails = new BookingDetails()
-                    {
-                        // Get destination and origin from the composite entities arrays.
-                        Destination = luisResult.ToEntities.Airport,
-                        Origin = luisResult.FromEntities.Airport,
-                        TravelDate = luisResult.TravelDate,
-                    };
+                    var searchResult = JsonConvert.DeserializeObject<SearchResult<MovieResult>>(lookupJson);
+                    var text = string.Join(',', searchResult.Results.Select(x => x.OriginalTitle).ToList());
 
-                    // Run the BookingDialog giving it whatever details we have from the LUIS call, it will fill out the remainder.
-                    return await stepContext.BeginDialogAsync(nameof(BookingDialog), bookingDetails, cancellationToken);
-
-                case FlightBooking.Intent.GetWeather:
-                    // We haven't implemented the GetWeatherDialog so we just display a TODO message.
-                    var getWeatherMessageText = "TODO: get weather flow here";
-                    var getWeatherMessage = MessageFactory.Text(getWeatherMessageText, getWeatherMessageText, InputHints.IgnoringInput);
+                    var getWeatherMessage = MessageFactory.Text(text, text, InputHints.IgnoringInput);
                     await stepContext.Context.SendActivityAsync(getWeatherMessage, cancellationToken);
                     break;
 
                 default:
-                    // Catch all for unhandled intents
                     var didntUnderstandMessageText = $"Sorry, I didn't get that. Please try asking in a different way (intent was {luisResult.TopIntent().intent})";
                     var didntUnderstandMessage = MessageFactory.Text(didntUnderstandMessageText, didntUnderstandMessageText, InputHints.IgnoringInput);
                     await stepContext.Context.SendActivityAsync(didntUnderstandMessage, cancellationToken);
@@ -103,33 +92,6 @@ namespace Mov4Anyone.Dialogs
             }
 
             return await stepContext.NextAsync(null, cancellationToken);
-        }
-
-        // Shows a warning if the requested From or To cities are recognized as entities but they are not in the Airport entity list.
-        // In some cases LUIS will recognize the From and To composite entities as a valid cities but the From and To Airport values
-        // will be empty if those entity values can't be mapped to a canonical item in the Airport.
-        private static async Task ShowWarningForUnsupportedCities(ITurnContext context, FlightBooking luisResult, CancellationToken cancellationToken)
-        {
-            var unsupportedCities = new List<string>();
-
-            var fromEntities = luisResult.FromEntities;
-            if (!string.IsNullOrEmpty(fromEntities.From) && string.IsNullOrEmpty(fromEntities.Airport))
-            {
-                unsupportedCities.Add(fromEntities.From);
-            }
-
-            var toEntities = luisResult.ToEntities;
-            if (!string.IsNullOrEmpty(toEntities.To) && string.IsNullOrEmpty(toEntities.Airport))
-            {
-                unsupportedCities.Add(toEntities.To);
-            }
-
-            if (unsupportedCities.Any())
-            {
-                var messageText = $"Sorry but the following airports are not supported: {string.Join(',', unsupportedCities)}";
-                var message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
-                await context.SendActivityAsync(message, cancellationToken);
-            }
         }
 
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)

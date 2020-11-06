@@ -1,0 +1,498 @@
+{
+  "luis_schema_version": "7.0.0",
+  "intents": [
+    {
+      "name": "None",
+      "features": []
+    },
+    {
+      "name": "recommendMovie",
+      "features": []
+    },
+    {
+      "name": "recommendTv",
+      "features": []
+    },
+    {
+      "name": "searchMovie",
+      "features": []
+    },
+    {
+      "name": "searchPeople",
+      "features": []
+    },
+    {
+      "name": "searchTV",
+      "features": []
+    }
+  ],
+  "entities": [
+    {
+      "name": "movie",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "person",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "role",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "tv show",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "type",
+      "children": [],
+      "roles": [],
+      "features": []
+    }
+  ],
+  "hierarchicals": [],
+  "composites": [],
+  "closedLists": [],
+  "prebuiltEntities": [],
+  "utterances": [
+    {
+      "text": "i heard about movie called top gun",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 27,
+          "endPos": 33,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i heard about tv show called lost",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 14,
+          "endPos": 20,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 29,
+          "endPos": 32,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i look for a movie called avengers",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 26,
+          "endPos": 33,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i look for tv show called suits",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 26,
+          "endPos": 30,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i want to see ben affleck movies",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 14,
+          "endPos": 24,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 26,
+          "endPos": 31,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i want to start new tv show",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 20,
+          "endPos": 26,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i watched avengers and like to see similar movie",
+      "intent": "recommendMovie",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 10,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 43,
+          "endPos": 47,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i watched house recommend me something similar",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 10,
+          "endPos": 14,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i watched house. recommend me something similar",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 10,
+          "endPos": 14,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i watched top gun. recommend me something similar",
+      "intent": "recommendMovie",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 10,
+          "endPos": 16,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i'd like to see ben affleck films",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 16,
+          "endPos": 26,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 28,
+          "endPos": 32,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is nolan a director?",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 3,
+          "endPos": 7,
+          "children": []
+        },
+        {
+          "entity": "role",
+          "startPos": 11,
+          "endPos": 18,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is tarantino an actor?",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 3,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "role",
+          "startPos": 16,
+          "endPos": 20,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a movie called star wars?",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 24,
+          "endPos": 32,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a movie star wars?",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 17,
+          "endPos": 25,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a tv show called house?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 26,
+          "endPos": 30,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a tv show house?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 19,
+          "endPos": 23,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "nolan films",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 0,
+          "endPos": 4,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 6,
+          "endPos": 10,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "nolan movies",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 0,
+          "endPos": 4,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 6,
+          "endPos": 11,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me a film",
+      "intent": "recommendMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 15,
+          "endPos": 18,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me a movie",
+      "intent": "recommendMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 15,
+          "endPos": 19,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me tv show",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 19,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me tv show simillar to house",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 19,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 33,
+          "endPos": 37,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me ben affleck movies",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 12,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 20,
+          "endPos": 25,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me nolan movies",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 8,
+          "endPos": 12,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 14,
+          "endPos": 19,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "what is ben affleck in",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 8,
+          "endPos": 18,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "who is nolan",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 7,
+          "endPos": 11,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "versionId": "0.1",
+  "name": "Mov4Anyone",
+  "desc": "",
+  "culture": "en-us",
+  "tokenizerVersion": "1.0.0",
+  "patternAnyEntities": [],
+  "regex_entities": [],
+  "phraselists": [],
+  "regex_features": [],
+  "patterns": [],
+  "settings": []
+}
