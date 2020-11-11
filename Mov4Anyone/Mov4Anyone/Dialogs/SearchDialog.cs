@@ -15,10 +15,10 @@ using System.Threading.Tasks;
 
 namespace Mov4Anyone.Dialogs
 {
-    public class DetailsDialog : ComponentDialog
+    public class SearchDialog : ComponentDialog
     {
         private readonly TMDBService _tmdbService;
-        public DetailsDialog(TMDBService service) : base(nameof(DetailsDialog))
+        public SearchDialog(TMDBService service) : base(nameof(SearchDialog))
         {
             _tmdbService = service;
             AddDialog(new TextPrompt(nameof(TextPrompt)));
