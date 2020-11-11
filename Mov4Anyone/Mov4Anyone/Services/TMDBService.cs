@@ -36,6 +36,11 @@ namespace Mov4Anyone.Services
             return url;
         }
 
+        public string GetBaseUrl()
+        {
+            return _baseUrl + _apiKey;
+        }
+
 
         public async Task<string> FetchInformation(string endpoint, string query, int? id)
         {

@@ -12,6 +12,7 @@ namespace Mov4Anyone.Services
             {"searchMovie", "/search/movie"},
             {"searchTV", "/search/tv"},
             {"searchPeople", "/search/person"},
+            {"personDetails", "/person/{id}"},
             {"movieDetails", "/movie/{id}"},
             {"movieVideos", "/movie/{id}/videos"},
             {"tvDetails", "/tv/{id}"},

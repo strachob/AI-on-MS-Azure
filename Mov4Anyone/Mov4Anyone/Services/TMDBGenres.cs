@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Mov4Anyone.Services
 {
-    public class TMDBGenres
+    public static class TMDBGenres
     {
-        public Dictionary<string, int> MovieGenres { get; set; } = new Dictionary<string, int>()
+        public static Dictionary<string, int> MovieGenres { get; set; } = new Dictionary<string, int>()
         {
             {"Action", 28},
             {"Adventure", 12},
@@ -18,7 +18,6 @@ namespace Mov4Anyone.Services
             {"Drama", 18 },
             {"Family", 10751 },
             {"Fantasy", 14 },
-            {"Drama", 18 },
             {"History", 36 },
             {"Horror", 27 },
             {"Mystery", 9648 },
@@ -30,7 +29,7 @@ namespace Mov4Anyone.Services
             {"Western", 37 }
         };
 
-        public Dictionary<string, int> TVGenres { get; set; } = new Dictionary<string, int>()
+        public static Dictionary<string, int> TVGenres { get; set; } = new Dictionary<string, int>()
         {
             {"Action & Adventure", 10759},
             {"Animation", 16},

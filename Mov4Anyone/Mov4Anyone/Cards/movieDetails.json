@@ -1,0 +1,93 @@
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "Person description"
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "Image",
+              "style": "Person",
+              "url": "${creator.profileImage}",
+              "size": "Large"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "Bolder",
+              "text": "${person.name}",
+              "wrap": true,
+              "id": "name",
+              "size": "Medium"
+            },
+            {
+              "type": "TextBlock",
+              "spacing": "Small",
+              "text": "Born: ",
+              "isSubtle": true,
+              "wrap": true,
+              "id": "born",
+              "separator": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Role:",
+              "wrap": true,
+              "size": "small"
+            },
+            {
+              "type": "TextBlock",
+              "weight": "Bolder",
+              "text": "${movie.name}",
+              "wrap": true,
+              "id": "name2",
+              "size": "small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Role:",
+              "wrap": true,
+              "size": "small"
+            }
+          ],
+          "width": "stretch"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "${biography}",
+      "wrap": true,
+      "id": "biography"
+    },
+    {
+      "type": "FactSet",
+      "facts": [
+
+      ],
+      "separator": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Read more...",
+      "url": "${viewUrl}"
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.2"
+}

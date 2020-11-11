@@ -39,8 +39,6 @@ namespace Mov4Anyone
             services.AddSingleton<MovieRecognizer>();
             services.AddSingleton<TMDBService>();
 
-            // Register the BookingDialog.
-            services.AddSingleton<BookingDialog>();
 
             // The MainDialog that will be run by the bot.
             services.AddSingleton<MainDialog>();
