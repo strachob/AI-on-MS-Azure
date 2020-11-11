@@ -16,7 +16,6 @@
           "items": [
             {
               "type": "Image",
-              "style": "Person",
               "url": "${creator.profileImage}",
               "size": "Large"
             }

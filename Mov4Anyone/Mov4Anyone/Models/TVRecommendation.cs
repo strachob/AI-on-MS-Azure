@@ -9,7 +9,7 @@ namespace Mov4Anyone.Models
     public class TVRecommendation
     {
         public int Page { get; set; }
-        public RecommendedMovie[] Results { get; set; }
+        public RecommendedShow[] Results { get; set; }
         [JsonProperty("total_pages")]
         public int TotalPages { get; set; }
         [JsonProperty("total_results")]

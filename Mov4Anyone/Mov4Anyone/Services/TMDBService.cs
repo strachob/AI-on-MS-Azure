@@ -44,21 +44,21 @@ namespace Mov4Anyone.Services
 
         public async Task<string> FetchInformation(string endpoint, string query, int? id)
         {
-            using (var client = new HttpClient())
+            using var client = new HttpClient
             {
-                client.BaseAddress = new Uri(BuildAPIUrl(endpoint, query, id));
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                BaseAddress = new Uri(BuildAPIUrl(endpoint, query, id))
+            };
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage Res = await client.GetAsync(client.BaseAddress);
+            HttpResponseMessage Res = await client.GetAsync(client.BaseAddress);
 
-                if (Res.IsSuccessStatusCode)
-                {
-                    return Res.Content.ReadAsStringAsync().Result;
-                }
-
-                return default;
+            if (Res.IsSuccessStatusCode)
+            {
+                return Res.Content.ReadAsStringAsync().Result;
             }
+
+            return default;
         }
     }
 }

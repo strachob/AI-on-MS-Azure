@@ -18,7 +18,7 @@ namespace Mov4Anyone.Services
             {"tvDetails", "/tv/{id}"},
             {"tvVideos", "/tv/{id}/videos"},
             {"recommendMovie", "/movie/{id}/recommendations"},
-            {"recommendTV", "/tv/{id}/recommendations"},
+            {"recommendTv", "/tv/{id}/recommendations"},
         };
 
     }

@@ -3,7 +3,7 @@ using AdaptiveCards;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
-using Microsoft.Extensions.Configuration;
+using Mov4Anyone.CognitiveModels;
 using Mov4Anyone.Models;
 using Mov4Anyone.Services;
 using Newtonsoft.Json.Linq;
@@ -26,8 +26,7 @@ namespace Mov4Anyone.Cards
             AdaptiveCardParseResult result = AdaptiveCard.FromJson(adaptiveCardJson);
             AdaptiveCard card = result.Card;
 
-            var title = (AdaptiveTextBlock)card.Body.First();
-            title.Text = "Did you mean any of these movies?";
+            ((AdaptiveTextBlock)card.Body.First()).Text = "Did you mean any of these movies?";
 
             card.Actions = movieResults.Results
                 .OrderByDescending(x => x.Popularity)
@@ -63,8 +62,7 @@ namespace Mov4Anyone.Cards
             AdaptiveCardParseResult result = AdaptiveCard.FromJson(adaptiveCardJson);
             AdaptiveCard card = result.Card;
 
-            var title = (AdaptiveTextBlock)card.Body.First();
-            title.Text = "Did you mean any of these tv shows?";
+            ((AdaptiveTextBlock)card.Body.First()).Text = "Did you mean any of these tv shows?";
 
             card.Actions = movieResults.Results
                 .OrderByDescending(x => x.Popularity)
@@ -101,8 +99,7 @@ namespace Mov4Anyone.Cards
             AdaptiveCardParseResult result = AdaptiveCard.FromJson(adaptiveCardJson);
             AdaptiveCard card = result.Card;
 
-           var title = (AdaptiveTextBlock)card.Body.First();
-            title.Text = "Did you mean any of these people?";
+           ((AdaptiveTextBlock)card.Body.First()).Text = "Did you mean any of these people?";
 
             card.Actions = movieResults.Results
                 .OrderByDescending(x => x.Popularity)
@@ -129,7 +126,7 @@ namespace Mov4Anyone.Cards
             };
         }
 
-
+       
         public PromptOptions GeneratePersonDetailsAttachment(PersonDetails personDetails, PersonKnownFor[] knownFor)
         {
             var paths = new[] { ".", "Cards", "personDetails.json" };
@@ -223,6 +220,78 @@ namespace Mov4Anyone.Cards
                    Title = x.Name,
                    Value = $"- ({x.AirDate.Split("-")[0]}) - {x.EpisodeCount} episodes"
                }));
+
+            return new PromptOptions
+            {
+                Prompt = (Activity)MessageFactory.Attachment(new Attachment()
+                {
+                    ContentType = "application/vnd.microsoft.card.adaptive",
+                    Content = JObject.FromObject(card)
+                })
+            };
+        }
+
+        public PromptOptions GenerateRecommendedMoviesAttachment(MovieRecommedation movieRecommedation)
+        {
+            var paths = new[] { ".", "Cards", "searchTemplate.json" };
+            var adaptiveCardJson = File.ReadAllText(Path.Combine(paths));
+
+            AdaptiveCardParseResult result = AdaptiveCard.FromJson(adaptiveCardJson);
+            AdaptiveCard card = result.Card;
+
+            ((AdaptiveTextBlock)card.Body.First()).Text = "Here are 5 movies similar to one you provided:";
+
+            card.Actions = movieRecommedation.Results
+                .OrderByDescending(x => x.Popularity)
+                .Take(5)
+                .Select(x => new AdaptiveSubmitAction
+                {
+                    Title = $"{x.Title} ({x.ReleaseDate?.Split("-")[0]}) \n\n " +
+                        $"Genre: {TMDBGenres.MovieGenres.Where(y => y.Value == x.GenreIds[0]).FirstOrDefault().Key} \n\n " +
+                        $"Overview: {x.Overview}", 
+                    Data = new
+                    {
+                        x.Id,
+                        Type = "Movie"
+                    }
+                })
+                .ToList<AdaptiveAction>();
+
+            return new PromptOptions
+            {
+                Prompt = (Activity)MessageFactory.Attachment(new Attachment()
+                {
+                    ContentType = "application/vnd.microsoft.card.adaptive",
+                    Content = JObject.FromObject(card)
+                })
+            };
+        }
+
+        public PromptOptions GenerateRecommendedTvAttachment(TVRecommendation recommendationResult)
+        {
+            var paths = new[] { ".", "Cards", "searchTemplate.json" };
+            var adaptiveCardJson = File.ReadAllText(Path.Combine(paths));
+
+            AdaptiveCardParseResult result = AdaptiveCard.FromJson(adaptiveCardJson);
+            AdaptiveCard card = result.Card;
+
+            ((AdaptiveTextBlock)card.Body.First()).Text = "Here are 5 tv shows similar to one you provided:";
+
+            card.Actions = recommendationResult.Results
+                .OrderByDescending(x => x.Popularity)
+                .Take(5)
+                .Select(x => new AdaptiveSubmitAction
+                {
+                    Title = $"{x.Name} ({x.FirstAirDate?.Split("-")[0]}) \n\n " +
+                        $"Genre: {TMDBGenres.TVGenres.Where(y => y.Value == x.GenreIds[0]).FirstOrDefault().Key} \n\n " +
+                        $"Overview: {x.Overview}",
+                    Data = new
+                    {
+                        x.Id,
+                        Type = "Tv"
+                    }
+                })
+                .ToList<AdaptiveAction>();
 
             return new PromptOptions
             {

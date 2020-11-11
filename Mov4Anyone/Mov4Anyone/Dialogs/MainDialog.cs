@@ -43,7 +43,6 @@ namespace Mov4Anyone.Dialogs
             AddDialog(detailsDialog);
             AddDialog(videoDialog);
             AddDialog(new TextPrompt(nameof(TextPrompt)));
-            AddDialog(new ChoicePrompt("Prompt", AdaptiveCardVerifier));
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
                 IntroStepAsync,
@@ -56,15 +55,6 @@ namespace Mov4Anyone.Dialogs
             InitialDialogId = nameof(WaterfallDialog);
         }
 
-        private Task<bool> AdaptiveCardVerifier(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
-        {
-            if (promptContext.Context.Activity.Value != null)
-            {
-
-            }
-            return Task.FromResult(true);
-        }
-
         private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             if (!_luisRecognizer.IsConfigured)
@@ -75,7 +65,7 @@ namespace Mov4Anyone.Dialogs
                 return await stepContext.NextAsync(null, cancellationToken);
             }
 
-            var messageText = stepContext.Options?.ToString() ?? "What can I help you with?\nI know a lot about movies and tv shows!\nDon't be afraid to ask :)";
+            var messageText = stepContext.Options?.ToString() ?? "What can I help you with?\n\nI know a lot about movies and tv shows!\nDon't be afraid to ask :)";
             var promptMessage = MessageFactory.Text(messageText, messageText, InputHints.ExpectingInput);
             return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
         }
@@ -91,7 +81,6 @@ namespace Mov4Anyone.Dialogs
 
             switch (luisResult.TopIntent().intent)
             {
-
                 case Movies4Anyone.Intent.searchMovie:
                 case Movies4Anyone.Intent.searchTV:
                 case Movies4Anyone.Intent.searchPeople:
@@ -122,7 +111,6 @@ namespace Mov4Anyone.Dialogs
 
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-
             var promptMessage = "I hope this information help you.";
             return await stepContext.ReplaceDialogAsync(InitialDialogId, promptMessage, cancellationToken);
         }
