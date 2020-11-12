@@ -129,14 +129,14 @@ namespace Mov4Anyone.Dialogs
             {
                 case "Movie":
                     var info = await _tmdbService
-                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.movieDetails.ToString()], "", choiceResult.Id);
+                        .FetchInformation(TMDBEndpoints.APIEndpoints["movieDetails"], "", choiceResult.Id);
                     var movieDetails = JsonConvert.DeserializeObject<MovieDetails>(info);
                     opts = new AdaptiveCardGenerator().GenerateMovieDetailsAttachment(movieDetails);
                     break;
 
                 case "Tv":
                     info = await _tmdbService
-                                            .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.tvDetails.ToString()], "", choiceResult.Id);
+                                            .FetchInformation(TMDBEndpoints.APIEndpoints["tvDetails"], "", choiceResult.Id);
                     var tVDetails = JsonConvert.DeserializeObject<TVDetails>(info);
                     opts = new AdaptiveCardGenerator().GenerateTVDetailsAttachment(tVDetails);
       

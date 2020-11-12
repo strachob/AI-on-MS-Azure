@@ -2,10 +2,6 @@
   "luis_schema_version": "7.0.0",
   "intents": [
     {
-      "name": "movieDetails",
-      "features": []
-    },
-    {
       "name": "movieVideos",
       "features": []
     },
@@ -31,10 +27,6 @@
     },
     {
       "name": "searchTV",
-      "features": []
-    },
-    {
-      "name": "tvDetails",
       "features": []
     },
     {
@@ -80,6 +72,96 @@
   "prebuiltEntities": [],
   "utterances": [
     {
+      "text": "i heard about a movie called avengers",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 16,
+          "endPos": 20,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 29,
+          "endPos": 36,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i heard about movie avengers: endgame",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 14,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 20,
+          "endPos": 36,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i heard about movie called avengers",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 14,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 27,
+          "endPos": 34,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i heard about movie called avengers: endgame",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 14,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 27,
+          "endPos": 43,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i heard about movie called the lord of the rings",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 14,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 27,
+          "endPos": 47,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "i heard about movie called top gun",
       "intent": "searchMovie",
       "entities": [
@@ -87,6 +169,42 @@
           "entity": "movie",
           "startPos": 27,
           "endPos": 33,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i heard about movie the lord of the rings",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 14,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 20,
+          "endPos": 40,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i heard about tv show called house of cards",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 14,
+          "endPos": 20,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 29,
+          "endPos": 42,
           "children": []
         }
       ]
@@ -110,6 +228,72 @@
       ]
     },
     {
+      "text": "i heard about tv show called the walking dead",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 14,
+          "endPos": 20,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 29,
+          "endPos": 44,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i heard about tv show house of cards",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 14,
+          "endPos": 20,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 22,
+          "endPos": 35,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i heard about tv show the walking dead",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 14,
+          "endPos": 20,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 22,
+          "endPos": 37,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i heard of tv called lost",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 21,
+          "endPos": 24,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "i look for a movie called avengers",
       "intent": "searchMovie",
       "entities": [
@@ -117,6 +301,60 @@
           "entity": "movie",
           "startPos": 26,
           "endPos": 33,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i look for a movie called avengers: endgame",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 26,
+          "endPos": 42,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i look for a movie called the lord of the rings",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 26,
+          "endPos": 46,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i look for a movie called the silence of lambs",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 26,
+          "endPos": 45,
           "children": []
         }
       ]
@@ -158,6 +396,42 @@
       ]
     },
     {
+      "text": "i want to see a bit of the lord of the rings film",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 23,
+          "endPos": 43,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 45,
+          "endPos": 48,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i want to see a bit of the lord of the rings movie",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 23,
+          "endPos": 43,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 45,
+          "endPos": 49,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "i want to see ben affleck movies",
       "intent": "searchPeople",
       "entities": [
@@ -171,6 +445,30 @@
           "entity": "type",
           "startPos": 26,
           "endPos": 31,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i want to start new series",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 20,
+          "endPos": 25,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i want to start new tv series",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 20,
+          "endPos": 28,
           "children": []
         }
       ]
@@ -242,6 +540,60 @@
       ]
     },
     {
+      "text": "i would like to see a bit of orange is the new black series",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 29,
+          "endPos": 51,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 53,
+          "endPos": 58,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i would like to see a bit of orange is the new black tv series",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 29,
+          "endPos": 51,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 53,
+          "endPos": 61,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i would like to see a bit of orange is the new black tv show",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 29,
+          "endPos": 51,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 53,
+          "endPos": 59,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "i'd like to see ben affleck films",
       "intent": "searchPeople",
       "entities": [
@@ -260,13 +612,73 @@
       ]
     },
     {
-      "text": "in which year was avengers released?",
-      "intent": "movieDetails",
+      "text": "i'd like to see nolan films",
+      "intent": "searchPeople",
       "entities": [
         {
-          "entity": "movie",
-          "startPos": 18,
-          "endPos": 25,
+          "entity": "person",
+          "startPos": 16,
+          "endPos": 20,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 22,
+          "endPos": 26,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i'd like to see nolan movies",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 16,
+          "endPos": 20,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 22,
+          "endPos": 27,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i'd like to see robert downey jr films",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 16,
+          "endPos": 31,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 33,
+          "endPos": 37,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i'd like to see robert downey jr movies",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 16,
+          "endPos": 31,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 33,
+          "endPos": 38,
           "children": []
         }
       ]
@@ -285,6 +697,24 @@
           "entity": "role",
           "startPos": 11,
           "endPos": 18,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is robert downey jr an actor?",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 3,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "role",
+          "startPos": 23,
+          "endPos": 27,
           "children": []
         }
       ]
@@ -326,6 +756,24 @@
       ]
     },
     {
+      "text": "is there a movie called the lord of the rings?",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 24,
+          "endPos": 44,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "is there a movie star wars?",
       "intent": "searchMovie",
       "entities": [
@@ -339,6 +787,150 @@
           "entity": "movie",
           "startPos": 17,
           "endPos": 25,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a movie the lord of the rings?",
+      "intent": "searchMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 17,
+          "endPos": 37,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a series called house of cards?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 16,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 25,
+          "endPos": 38,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a series called stranger things?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 16,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 25,
+          "endPos": 39,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a series called the walking dead?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 16,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 25,
+          "endPos": 40,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a tv series called house of cards?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 19,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 28,
+          "endPos": 41,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a tv series called stranger things?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 19,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 28,
+          "endPos": 42,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a tv series called the walking dead?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 19,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 28,
+          "endPos": 43,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a tv show called house of cards?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 26,
+          "endPos": 39,
           "children": []
         }
       ]
@@ -362,6 +954,60 @@
       ]
     },
     {
+      "text": "is there a tv show called stranger things?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 26,
+          "endPos": 40,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a tv show called the walking dead?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 26,
+          "endPos": 41,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a tv show house of cards?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 19,
+          "endPos": 32,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "is there a tv show house?",
       "intent": "searchTV",
       "entities": [
@@ -375,6 +1021,42 @@
           "entity": "tv show",
           "startPos": 19,
           "endPos": 23,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a tv show stranger things?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 19,
+          "endPos": 33,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "is there a tv show the walking dead?",
+      "intent": "searchTV",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 11,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 19,
+          "endPos": 34,
           "children": []
         }
       ]
@@ -416,6 +1098,18 @@
       ]
     },
     {
+      "text": "please recommend me a tv show",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 22,
+          "endPos": 28,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "recommend me a film",
       "intent": "recommendMovie",
       "entities": [
@@ -440,6 +1134,132 @@
       ]
     },
     {
+      "text": "recommend me series similar to house of cards",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 31,
+          "endPos": 44,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me series similar to the walking dead",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 31,
+          "endPos": 46,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me similar film to avengers",
+      "intent": "recommendMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 21,
+          "endPos": 24,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 29,
+          "endPos": 36,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me similar film to sherlock holmes",
+      "intent": "recommendMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 21,
+          "endPos": 24,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 29,
+          "endPos": 43,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me similar film to the lord of the rings",
+      "intent": "recommendMovie",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 21,
+          "endPos": 24,
+          "children": []
+        },
+        {
+          "entity": "movie",
+          "startPos": 29,
+          "endPos": 49,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me tv series similar to house of cards",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 21,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 34,
+          "endPos": 47,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me tv series similar to the walking dead",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 21,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 34,
+          "endPos": 49,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "recommend me tv show",
       "intent": "recommendTv",
       "entities": [
@@ -447,6 +1267,42 @@
           "entity": "type",
           "startPos": 13,
           "endPos": 19,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me tv show similar to house of cards",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 19,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 32,
+          "endPos": 45,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "recommend me tv show similar to the walking dead",
+      "intent": "recommendTv",
+      "entities": [
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 19,
+          "children": []
+        },
+        {
+          "entity": "tv show",
+          "startPos": 32,
+          "endPos": 47,
           "children": []
         }
       ]
@@ -465,6 +1321,204 @@
           "entity": "tv show",
           "startPos": 33,
           "endPos": 37,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "ridley scott movies",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 0,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 13,
+          "endPos": 18,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "robert downey jr movies",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 0,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 17,
+          "endPos": 22,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a clip form avengers film",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 20,
+          "endPos": 27,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 29,
+          "endPos": 32,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a clip form avengers movie",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 20,
+          "endPos": 27,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 29,
+          "endPos": 33,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a clip form sherlock holmes film",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 20,
+          "endPos": 34,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 36,
+          "endPos": 39,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a clip form sherlock holmes movie",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 20,
+          "endPos": 34,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 36,
+          "endPos": 40,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a clip form the lord of the rings film",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 20,
+          "endPos": 40,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 42,
+          "endPos": 45,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a clip form the lord of the rings movie",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 20,
+          "endPos": 40,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 42,
+          "endPos": 46,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a clip from star wars movie",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 20,
+          "endPos": 28,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 30,
+          "endPos": 34,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a clip from stranger things tv series",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 20,
+          "endPos": 34,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 36,
+          "endPos": 44,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a clip from stranger things tv show",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 20,
+          "endPos": 34,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 36,
+          "endPos": 42,
           "children": []
         }
       ]
@@ -500,6 +1554,42 @@
       ]
     },
     {
+      "text": "show me a fragment from avengers film",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 24,
+          "endPos": 31,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 33,
+          "endPos": 36,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a fragment from avengers movie",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 24,
+          "endPos": 31,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 33,
+          "endPos": 37,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "show me a fragment from star wars",
       "intent": "movieVideos",
       "entities": [
@@ -524,6 +1614,42 @@
       ]
     },
     {
+      "text": "show me a fragment of the house of cards tv series",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 26,
+          "endPos": 39,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 41,
+          "endPos": 49,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a fragment of the house of cards tv show",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 26,
+          "endPos": 39,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 41,
+          "endPos": 47,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "show me a fragment of the silence of lambs movie",
       "intent": "movieVideos",
       "entities": [
@@ -537,6 +1663,60 @@
           "entity": "type",
           "startPos": 43,
           "endPos": 47,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a fragment of the walking dead series",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 22,
+          "endPos": 37,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 39,
+          "endPos": 44,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a fragment of the walking dead tv series",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 22,
+          "endPos": 37,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 39,
+          "endPos": 47,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a fragment of the walking dead tv show",
+      "intent": "tvVideos",
+      "entities": [
+        {
+          "entity": "tv show",
+          "startPos": 22,
+          "endPos": 37,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 39,
+          "endPos": 45,
           "children": []
         }
       ]
@@ -558,6 +1738,11 @@
           "children": []
         }
       ]
+    },
+    {
+      "text": "show me a trailer for avangers",
+      "intent": "movieVideos",
+      "entities": []
     },
     {
       "text": "show me a trailer for sherlock holmes film",
@@ -608,6 +1793,42 @@
       ]
     },
     {
+      "text": "show me a trailer for the lord of the rings film",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 22,
+          "endPos": 42,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 44,
+          "endPos": 47,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me a trailer for the lord of the rings movie",
+      "intent": "movieVideos",
+      "entities": [
+        {
+          "entity": "movie",
+          "startPos": 22,
+          "endPos": 42,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 44,
+          "endPos": 48,
+          "children": []
+        }
+      ]
+    },
+    {
       "text": "show me a trailer for the witcher series",
       "intent": "tvVideos",
       "entities": [
@@ -644,61 +1865,19 @@
       ]
     },
     {
-      "text": "show me details about avengers",
-      "intent": "movieDetails",
+      "text": "show me downey movies",
+      "intent": "searchPeople",
       "entities": [
         {
-          "entity": "movie",
-          "startPos": 22,
-          "endPos": 29,
-          "children": []
-        }
-      ]
-    },
-    {
-      "text": "show me details about house tv show",
-      "intent": "tvDetails",
-      "entities": [
-        {
-          "entity": "tv show",
-          "startPos": 22,
-          "endPos": 26,
+          "entity": "person",
+          "startPos": 8,
+          "endPos": 13,
           "children": []
         },
         {
           "entity": "type",
-          "startPos": 28,
-          "endPos": 34,
-          "children": []
-        }
-      ]
-    },
-    {
-      "text": "show me details about lost",
-      "intent": "tvDetails",
-      "entities": [
-        {
-          "entity": "tv show",
-          "startPos": 22,
-          "endPos": 25,
-          "children": []
-        }
-      ]
-    },
-    {
-      "text": "show me details about top gun movie",
-      "intent": "movieDetails",
-      "entities": [
-        {
-          "entity": "movie",
-          "startPos": 22,
-          "endPos": 28,
-          "children": []
-        },
-        {
-          "entity": "type",
-          "startPos": 30,
-          "endPos": 34,
+          "startPos": 15,
+          "endPos": 20,
           "children": []
         }
       ]
@@ -717,6 +1896,42 @@
           "entity": "type",
           "startPos": 14,
           "endPos": 19,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me ridley scott movies",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 8,
+          "endPos": 19,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 21,
+          "endPos": 26,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "show me robert downey jr movies",
+      "intent": "searchPeople",
+      "entities": [
+        {
+          "entity": "person",
+          "startPos": 8,
+          "endPos": 23,
+          "children": []
+        },
+        {
+          "entity": "type",
+          "startPos": 25,
+          "endPos": 30,
           "children": []
         }
       ]
@@ -770,42 +1985,6 @@
       ]
     },
     {
-      "text": "when house first aired?",
-      "intent": "tvDetails",
-      "entities": [
-        {
-          "entity": "tv show",
-          "startPos": 5,
-          "endPos": 9,
-          "children": []
-        }
-      ]
-    },
-    {
-      "text": "when was the witcher released?",
-      "intent": "tvDetails",
-      "entities": [
-        {
-          "entity": "tv show",
-          "startPos": 9,
-          "endPos": 19,
-          "children": []
-        }
-      ]
-    },
-    {
-      "text": "who directed mission impossible?",
-      "intent": "movieDetails",
-      "entities": [
-        {
-          "entity": "movie",
-          "startPos": 13,
-          "endPos": 30,
-          "children": []
-        }
-      ]
-    },
-    {
       "text": "who is nolan",
       "intent": "searchPeople",
       "entities": [
@@ -818,24 +1997,12 @@
       ]
     },
     {
-      "text": "who is responsible for house?",
-      "intent": "tvDetails",
+      "text": "who is robert downey jr?",
+      "intent": "searchPeople",
       "entities": [
         {
-          "entity": "tv show",
-          "startPos": 23,
-          "endPos": 27,
-          "children": []
-        }
-      ]
-    },
-    {
-      "text": "who is showrunning lost?",
-      "intent": "tvDetails",
-      "entities": [
-        {
-          "entity": "tv show",
-          "startPos": 19,
+          "entity": "person",
+          "startPos": 7,
           "endPos": 22,
           "children": []
         }
