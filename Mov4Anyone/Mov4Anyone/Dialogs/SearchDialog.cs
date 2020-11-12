@@ -43,56 +43,98 @@ namespace Mov4Anyone.Dialogs
 
         private async Task<DialogTurnResult> InitialStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var luisResult = (Movies4Anyone)stepContext.Options;
+            var luisResult = (Movies4Anyone)stepContext?.Options;
+
+            PromptOptions opts = null;
             switch (luisResult.TopIntent().intent)
             {
                 case Movies4Anyone.Intent.searchMovie:
-                    var lookupJson = await _tmdbService
-                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchMovie.ToString()], luisResult.Entities.movie.FirstOrDefault(), null);
+                    if (luisResult.Entities.movie != null)
+                    {
+                        var lookupJson = await _tmdbService
+                            .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchMovie.ToString()], luisResult.Entities.movie.FirstOrDefault(), null);
 
-                    var movieResult = JsonConvert.DeserializeObject<SearchResult<MovieResult>>(lookupJson);
-                    var opts = new AdaptiveCardGenerator().GenerateMovieSearchAttachment(movieResult);
-
-
-                    await stepContext.Context.SendActivityAsync(opts.Prompt);
-                    opts.Prompt = new Activity(type: ActivityTypes.Typing);
-                    return await stepContext.PromptAsync("Prompt", opts, cancellationToken);
+                        var movieResult = JsonConvert.DeserializeObject<SearchResult<MovieResult>>(lookupJson);
+                        opts = new AdaptiveCardGenerator().GenerateMovieSearchAttachment(movieResult);
+                    }
+                    else
+                    {
+                        var promptMessage = MessageFactory.Text("I didn't get the name of the movie. Could you repeat please?", "I didn't get the name of the movie. Could you repeat please?", InputHints.ExpectingInput);
+                        return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+                    }
+                    break;
 
                 case Movies4Anyone.Intent.searchTV:
+                    if (luisResult.Entities.tv_show != null)
+                    {
+                        var lookupJson = await _tmdbService
+                            .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchTV.ToString()], luisResult.Entities.tv_show.FirstOrDefault(), null);
 
-                    lookupJson = await _tmdbService
-                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchTV.ToString()], luisResult.Entities.tv_show.FirstOrDefault(), null);
-
-                    var tvResult = JsonConvert.DeserializeObject<SearchResult<TvResult>>(lookupJson);
-                    var optsTV = new AdaptiveCardGenerator().GenerateTvSearchAttachment(tvResult);
-
-
-                    await stepContext.Context.SendActivityAsync(optsTV.Prompt);
-                    optsTV.Prompt = new Activity(type: ActivityTypes.Typing);
-                    return await stepContext.PromptAsync("Prompt", optsTV, cancellationToken);
-
+                        var tvResult = JsonConvert.DeserializeObject<SearchResult<TvResult>>(lookupJson);
+                        opts = new AdaptiveCardGenerator().GenerateTvSearchAttachment(tvResult);
+                    }
+                    else
+                    {
+                        var promptMessage = MessageFactory.Text("I didn't get the name of the tv show. Could you repeat please?", "I didn't get the name of the tv show. Could you repeat please?", InputHints.ExpectingInput);
+                        return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+                    }
+                    break;
 
                 case Movies4Anyone.Intent.searchPeople:
+                    if (luisResult.Entities.person != null)
+                    {
+                        var lookupJson = await _tmdbService
+                            .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchPeople.ToString()], luisResult.Entities.person.FirstOrDefault(), null);
 
-                    lookupJson = await _tmdbService
-                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchPeople.ToString()], luisResult.Entities.person.FirstOrDefault(), null);
-
-                    var peopleResult = JsonConvert.DeserializeObject<SearchResult<PersonResult>>(lookupJson);
-                    var optsPerson = new AdaptiveCardGenerator().GeneratePersonSearchAttachment(peopleResult);
-
-
-                    await stepContext.Context.SendActivityAsync(optsPerson.Prompt);
-                    optsPerson.Prompt = new Activity(type: ActivityTypes.Typing);
-                    return await stepContext.PromptAsync("Prompt", optsPerson, cancellationToken);
+                        var peopleResult = JsonConvert.DeserializeObject<SearchResult<PersonResult>>(lookupJson);
+                        opts = new AdaptiveCardGenerator().GeneratePersonSearchAttachment(peopleResult);
+                    }
+                    else
+                    {
+                        var promptMessage = MessageFactory.Text("I didn't get the name of this person. Could you repeat please?", "I didn't get the name of this person. Could you repeat please?", InputHints.ExpectingInput);
+                        return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+                    }
+                    break;
             }
-            
+
+            if (opts != null)
+            {
+                await stepContext.Context.SendActivityAsync(opts.Prompt);
+                opts.Prompt = new Activity(type: ActivityTypes.Typing);
+                return await stepContext.PromptAsync("Prompt", opts, cancellationToken);
+            }
+
             return await stepContext.NextAsync(0, cancellationToken);
         }
 
 
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var choiceResult = JsonConvert.DeserializeObject<PersonSearchModel>(stepContext.Context.Activity.Value.ToString());
+            PersonSearchModel choiceResult = new PersonSearchModel();
+            try
+            {
+                choiceResult = JsonConvert.DeserializeObject<PersonSearchModel>(stepContext.Context.Activity.Value.ToString());
+            }
+            catch (NullReferenceException)
+            {
+                if (stepContext.Result is string text)
+                {
+                    var luis = stepContext.Options as Movies4Anyone;
+                    if (luis.TopIntent().intent == Movies4Anyone.Intent.searchMovie)
+                    {
+                        ((Movies4Anyone)stepContext.Options).Entities.movie = new string[] { text };
+                    }
+                    else if(luis.TopIntent().intent == Movies4Anyone.Intent.searchTV)
+                    {
+                        ((Movies4Anyone)stepContext.Options).Entities.tv_show = new string[] { text };
+                    }
+                    else
+                    {
+                        ((Movies4Anyone)stepContext.Options).Entities.person = new string[] { text };
+                    }
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, options: stepContext.Options, cancellationToken);
+                }
+            }
 
             PromptOptions opts = new PromptOptions();
             switch (choiceResult.Type)

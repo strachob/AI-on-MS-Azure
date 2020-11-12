@@ -107,7 +107,7 @@ namespace Mov4Anyone.Dialogs
             {
                 choiceResult = JsonConvert.DeserializeObject<SearchModel>(stepContext.Context.Activity.Value.ToString());
             }
-            catch (Exception)
+            catch (NullReferenceException)
             {
                 if (stepContext.Result is string text)
                 {
@@ -136,9 +136,10 @@ namespace Mov4Anyone.Dialogs
 
                 case "Tv":
                     info = await _tmdbService
-                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.tvDetails.ToString()], "", choiceResult.Id);
+                                            .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.tvDetails.ToString()], "", choiceResult.Id);
                     var tVDetails = JsonConvert.DeserializeObject<TVDetails>(info);
                     opts = new AdaptiveCardGenerator().GenerateTVDetailsAttachment(tVDetails);
+      
                     break;
             }
             

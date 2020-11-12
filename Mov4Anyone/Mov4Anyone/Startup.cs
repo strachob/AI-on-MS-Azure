@@ -41,7 +41,6 @@ namespace Mov4Anyone
 
             services.AddSingleton<SearchDialog>();
             services.AddSingleton<RecommendationDialog>();
-            services.AddSingleton<DetailsDialog>();
             services.AddSingleton<VideoDialog>();
 
             // The MainDialog that will be run by the bot.

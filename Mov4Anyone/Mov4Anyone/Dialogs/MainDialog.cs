@@ -1,20 +1,12 @@
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
-using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
-using Mov4Anyone.Cards;
 using Mov4Anyone.CognitiveModels;
-using Mov4Anyone.Models;
 using Mov4Anyone.Services;
-using Newtonsoft.Json;
 
 namespace Mov4Anyone.Dialogs
 {
@@ -28,7 +20,6 @@ namespace Mov4Anyone.Dialogs
         public MainDialog(MovieRecognizer luisRecognizer, 
             SearchDialog searchDialog, 
             RecommendationDialog recommendationDialog,
-            DetailsDialog detailsDialog,
             VideoDialog videoDialog,
             ILogger<MainDialog> logger, 
             TMDBService tmdbService)
@@ -40,7 +31,6 @@ namespace Mov4Anyone.Dialogs
 
             AddDialog(searchDialog);
             AddDialog(recommendationDialog);
-            AddDialog(detailsDialog);
             AddDialog(videoDialog);
             AddDialog(new TextPrompt(nameof(TextPrompt)));
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
@@ -90,10 +80,6 @@ namespace Mov4Anyone.Dialogs
                 case Movies4Anyone.Intent.recommendTv:
                     return await stepContext.BeginDialogAsync(nameof(RecommendationDialog), luisResult, cancellationToken);
 
-                case Movies4Anyone.Intent.movieDetails:
-                case Movies4Anyone.Intent.tvDetails:
-                    return await stepContext.BeginDialogAsync(nameof(DetailsDialog), luisResult, cancellationToken);
-
                 case Movies4Anyone.Intent.movieVideos:
                 case Movies4Anyone.Intent.tvVideos:
                     return await stepContext.BeginDialogAsync(nameof(VideoDialog), luisResult, cancellationToken);
@@ -111,7 +97,7 @@ namespace Mov4Anyone.Dialogs
 
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var promptMessage = "I hope this information help you.";
+            var promptMessage = "I hope this information help you.\n\nWhat else can I do for you?";
             return await stepContext.ReplaceDialogAsync(InitialDialogId, promptMessage, cancellationToken);
         }
     }

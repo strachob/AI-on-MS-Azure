@@ -1,5 +1,6 @@
 ﻿
 using AdaptiveCards;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
@@ -8,6 +9,7 @@ using Mov4Anyone.Models;
 using Mov4Anyone.Services;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -88,6 +90,7 @@ namespace Mov4Anyone.Cards
                 })
             };
         }
+
 
         public PromptOptions GeneratePersonSearchAttachment(SearchResult<PersonResult> movieResults)
         {
@@ -180,6 +183,7 @@ namespace Mov4Anyone.Cards
             ((AdaptiveTextBlock)((AdaptiveColumnSet)card.Body[1]).Columns[1].Items[2]).Text = $"Genres: {string.Join(", ", movieDetails.Genres.Select(x => x.Name))}";
             ((AdaptiveTextBlock)((AdaptiveColumnSet)card.Body[1]).Columns[1].Items[3]).Text = $"Status: {movieDetails.Status}";
             ((AdaptiveTextBlock)((AdaptiveColumnSet)card.Body[1]).Columns[1].Items[4]).Text = $"Rating: {movieDetails.VoteAverage}";
+            ((AdaptiveTextBlock)((AdaptiveColumnSet)card.Body[1]).Columns[1].Items[5]).Text = $"Runtime: {movieDetails.Runtime} min";
             ((AdaptiveTextBlock)card.Body[2]).Text = movieDetails.Overview;
 
             ((AdaptiveOpenUrlAction)card.Actions.First()).Url = new Uri($"https://www.imdb.com/title/{movieDetails.ImdbId}");
@@ -218,7 +222,7 @@ namespace Mov4Anyone.Cards
                .AddRange(tvDetails.Seasons.OrderBy(x => x.SeasonNumber).Select(x => new AdaptiveFact
                {
                    Title = x.Name,
-                   Value = $"- ({x.AirDate.Split("-")[0]}) - {x.EpisodeCount} episodes"
+                   Value = $"- ({x.AirDate?.Split("-")[0]}) - {x.EpisodeCount} episodes"
                }));
 
             return new PromptOptions
@@ -302,5 +306,30 @@ namespace Mov4Anyone.Cards
                 })
             };
         }
+
+
+        public PromptOptions GenerateVideosAttachment(Videos recommendationResult)
+        {
+            var traileInfo = recommendationResult.Results.Where(x => x.Type.Equals("Trailer")).FirstOrDefault();
+
+            var card = new VideoCard
+            {
+                Title = traileInfo.Name,
+                Media = new List<MediaUrl>
+                {
+                    new MediaUrl()
+                    {
+                        Url = $"https://www.youtube.com/watch?v={traileInfo.Key}"
+                    }
+                }
+            };
+
+
+            return new PromptOptions
+            {
+                Prompt = (Activity)MessageFactory.Attachment(card.ToAttachment())
+            };
+        }
+
     }
 }

@@ -8,7 +8,6 @@ using Mov4Anyone.Models;
 using Mov4Anyone.Services;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +21,6 @@ namespace Mov4Anyone.Dialogs
         {
             _tmdbService = service;
             AddDialog(new TextPrompt(nameof(TextPrompt)));
-            AddDialog(new ChoicePrompt("Prompt", AdaptiveCardVerifier));
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
                  InitialStepAsync,
@@ -32,7 +30,7 @@ namespace Mov4Anyone.Dialogs
             InitialDialogId = nameof(WaterfallDialog);
         }
 
-        private Task<bool> AdaptiveCardVerifier(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
+        private Task<bool> AdaptiveCardVerifier(PromptValidatorContext<FoundChoice> promptContext)
         {
             if (promptContext.Context.Activity.Value != null)
             {
@@ -43,86 +41,85 @@ namespace Mov4Anyone.Dialogs
 
         private async Task<DialogTurnResult> InitialStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var luisResult = (Movies4Anyone)stepContext.Options;
+            var luisResult = (Movies4Anyone)stepContext?.Options;
+
+            PromptOptions opts = null;
             switch (luisResult.TopIntent().intent)
             {
-                case Movies4Anyone.Intent.searchMovie:
-                    var lookupJson = await _tmdbService
-                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchMovie.ToString()], luisResult.Entities.movie.FirstOrDefault(), null);
+                case Movies4Anyone.Intent.movieVideos:
+                    if (luisResult.Entities.movie != null)
+                    {
+                        var lookupJson = await _tmdbService
+                            .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchMovie.ToString()], luisResult.Entities.movie.FirstOrDefault(), null);
+                        var movieResult = JsonConvert.DeserializeObject<SearchResult<MovieResult>>(lookupJson);
+                        var recommendJson = await _tmdbService
+                            .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.movieVideos.ToString()], "", movieResult.Results.FirstOrDefault().Id);
+                        var recommendationResult = JsonConvert.DeserializeObject<Videos>(recommendJson);
+                        opts = new AdaptiveCardGenerator().GenerateVideosAttachment(recommendationResult);
+                    }
+                    else
+                    {
+                        var promptMessage = MessageFactory.Text("What movie would you like to see?", "What movie would you like to see?", InputHints.ExpectingInput);
+                        return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+                    }
+                    break;
 
-                    var movieResult = JsonConvert.DeserializeObject<SearchResult<MovieResult>>(lookupJson);
-                    var opts = new AdaptiveCardGenerator().GenerateMovieSearchAttachment(movieResult);
+                case Movies4Anyone.Intent.tvVideos:
+                    if (luisResult.Entities.tv_show != null)
+                    {
+                        var lookupJson = await _tmdbService
+                            .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchTV.ToString()], luisResult.Entities.tv_show.FirstOrDefault(), null);
+                        var tvResult = JsonConvert.DeserializeObject<SearchResult<TvResult>>(lookupJson);
+                        var recommendJson = await _tmdbService
+                            .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.tvVideos.ToString()], "", tvResult.Results.FirstOrDefault().Id);
+                        var recommendationResult = JsonConvert.DeserializeObject<Videos>(recommendJson);
+                        opts = new AdaptiveCardGenerator().GenerateVideosAttachment(recommendationResult);
+                    }
+                    else
+                    {
+                        var promptMessage = MessageFactory.Text("What tv show would you like to see?", "What tv show would you like to see?", InputHints.ExpectingInput);
+                        return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+                    }
 
-
-                    await stepContext.Context.SendActivityAsync(opts.Prompt);
-                    opts.Prompt = new Activity(type: ActivityTypes.Typing);
-                    return await stepContext.PromptAsync("Prompt", opts, cancellationToken);
-
-                case Movies4Anyone.Intent.searchTV:
-
-                    lookupJson = await _tmdbService
-                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchTV.ToString()], luisResult.Entities.tv_show.FirstOrDefault(), null);
-
-                    var tvResult = JsonConvert.DeserializeObject<SearchResult<TvResult>>(lookupJson);
-                    var optsTV = new AdaptiveCardGenerator().GenerateTvSearchAttachment(tvResult);
-
-
-                    await stepContext.Context.SendActivityAsync(optsTV.Prompt);
-                    optsTV.Prompt = new Activity(type: ActivityTypes.Typing);
-                    return await stepContext.PromptAsync("Prompt", optsTV, cancellationToken);
-
-
-                case Movies4Anyone.Intent.searchPeople:
-
-                    lookupJson = await _tmdbService
-                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.searchPeople.ToString()], luisResult.Entities.person.FirstOrDefault(), null);
-
-                    var peopleResult = JsonConvert.DeserializeObject<SearchResult<PersonResult>>(lookupJson);
-                    var optsPerson = new AdaptiveCardGenerator().GeneratePersonSearchAttachment(peopleResult);
-
-
-                    await stepContext.Context.SendActivityAsync(optsPerson.Prompt);
-                    optsPerson.Prompt = new Activity(type: ActivityTypes.Typing);
-                    return await stepContext.PromptAsync("Prompt", optsPerson, cancellationToken);
+                    break;
             }
-            
+
+            if (opts != null)
+            {
+                await stepContext.Context.SendActivityAsync(opts.Prompt);
+                opts.Prompt = new Activity(type: ActivityTypes.Typing);
+                return await stepContext.EndDialogAsync(null, cancellationToken);
+            }
+
             return await stepContext.NextAsync(0, cancellationToken);
         }
 
 
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var choiceResult = JsonConvert.DeserializeObject<PersonSearchModel>(stepContext.Context.Activity.Value.ToString());
-
-            PromptOptions opts = new PromptOptions();
-            switch (choiceResult.Type)
+            SearchModel choiceResult = new SearchModel();
+            try
             {
-                case "Movie":
-                    var info = await _tmdbService
-                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.movieDetails.ToString()], "", choiceResult.Id);
-                    var movieDetails = JsonConvert.DeserializeObject<MovieDetails>(info);
-                    opts = new AdaptiveCardGenerator().GenerateMovieDetailsAttachment(movieDetails);
-                    break;
-
-                case "Tv":
-                    info = await _tmdbService
-                        .FetchInformation(TMDBEndpoints.APIEndpoints[Movies4Anyone.Intent.tvDetails.ToString()], "", choiceResult.Id);
-                    var tVDetails = JsonConvert.DeserializeObject<TVDetails>(info);
-                    opts = new AdaptiveCardGenerator().GenerateTVDetailsAttachment(tVDetails);
-                    break;
-
-                case "Person":
-                    info = await _tmdbService
-                        .FetchInformation(TMDBEndpoints.APIEndpoints["personDetails"], "", choiceResult.Id);
-                    var personDetails = JsonConvert.DeserializeObject<PersonDetails>(info);
-                    opts = new AdaptiveCardGenerator().GeneratePersonDetailsAttachment(personDetails, choiceResult.KnownFor);
-                    break;
-
+                choiceResult = JsonConvert.DeserializeObject<SearchModel>(stepContext.Context.Activity.Value.ToString());
+            }
+            catch (Exception)
+            {
+                if (stepContext.Result is string text)
+                {
+                    var luis = stepContext.Options as Movies4Anyone;
+                    if (luis.TopIntent().intent == Movies4Anyone.Intent.movieVideos)
+                    {
+                        ((Movies4Anyone)stepContext.Options).Entities.movie = new string[] { text };
+                    }
+                    else
+                    {
+                        ((Movies4Anyone)stepContext.Options).Entities.tv_show = new string[] { text };
+                    }
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, options: stepContext.Options, cancellationToken);
+                }
             }
 
-            await stepContext.Context.SendActivityAsync(opts.Prompt);
-            opts.Prompt = new Activity(type: ActivityTypes.Typing);
-            return await stepContext.EndDialogAsync(null, cancellationToken);
+            return await stepContext.NextAsync(null, cancellationToken);
         }
     }
 }

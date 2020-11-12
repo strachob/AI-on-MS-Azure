@@ -60,6 +60,11 @@
               "text": "Role:",
               "wrap": true,
               "size": "small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "",
+              "wrap": true
             }
           ],
           "width": "stretch"
