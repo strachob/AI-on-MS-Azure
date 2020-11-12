@@ -3,12 +3,17 @@
 //
 // Generated with Bot Builder V4 SDK Template for Visual Studio CoreBot v4.10.3
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AdaptiveCards;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
+using Mov4Anyone.Services;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Mov4Anyone.Bots
 {
@@ -23,23 +28,42 @@ namespace Mov4Anyone.Bots
         protected readonly Dialog Dialog;
         protected readonly BotState ConversationState;
         protected readonly BotState UserState;
+        protected readonly TransciptionService _transciptionService;
         protected readonly ILogger Logger;
 
-        public DialogBot(ConversationState conversationState, UserState userState, T dialog, ILogger<DialogBot<T>> logger)
+        public DialogBot(ConversationState conversationState, UserState userState, T dialog, ILogger<DialogBot<T>> logger, TransciptionService trascriptionService)
         {
             ConversationState = conversationState;
             UserState = userState;
             Dialog = dialog;
             Logger = logger;
+            _transciptionService = trascriptionService;
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
         {
+            bool speechOn;
+            try
+            {
+                speechOn = JsonConvert.DeserializeObject<SpeechDetectorModel>(turnContext.Activity.Value.ToString()).SpeechOn;
+            }
+            catch (System.Exception)
+            {
+                speechOn = false;
+            }
+            if (speechOn)
+            {
+                var spokenText = await _transciptionService.RecognizeSpeechAsync();
+                await turnContext.SendActivityAsync($"You said: {spokenText}");
+                turnContext.Activity.Text = spokenText;
+                turnContext.Activity.Value = null;
+            }
             await base.OnTurnAsync(turnContext, cancellationToken);
 
             // Save any state changes that might have occurred during the turn.
             await ConversationState.SaveChangesAsync(turnContext, false, cancellationToken);
             await UserState.SaveChangesAsync(turnContext, false, cancellationToken);
+            await turnContext.SendActivityAsync(BuildSpeechButton().Prompt);
         }
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
@@ -48,6 +72,33 @@ namespace Mov4Anyone.Bots
 
             // Run the Dialog with the new message Activity.
             await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>("DialogState"), cancellationToken);
+        }
+
+        private PromptOptions BuildSpeechButton()
+        {
+            var card = new AdaptiveCard("1.2")
+            {
+                Actions = new List<AdaptiveAction>()
+                {
+                    new AdaptiveSubmitAction
+                    {
+                        Title = "Tap to speek",
+                        Data = new
+                        {
+                            Speek = true
+                        }
+                    }
+                }
+            };
+
+            return new PromptOptions
+            {
+                Prompt = (Activity)MessageFactory.Attachment(new Attachment()
+                {
+                    ContentType = "application/vnd.microsoft.card.adaptive",
+                    Content = JObject.FromObject(card)
+                })
+            };
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Mov4Anyone.Dialogs
     {
         private readonly MovieRecognizer _luisRecognizer;
         private readonly TMDBService _tmdbService;
+        private readonly TransciptionService _transcriptionService;
         protected readonly ILogger Logger;
 
         // Dependency injection uses this constructor to instantiate MainDialog
@@ -22,11 +23,13 @@ namespace Mov4Anyone.Dialogs
             RecommendationDialog recommendationDialog,
             VideoDialog videoDialog,
             ILogger<MainDialog> logger, 
-            TMDBService tmdbService)
+            TMDBService tmdbService,
+            TransciptionService transciptionService)
             : base(nameof(MainDialog))
         {
             _luisRecognizer = luisRecognizer;
             _tmdbService = tmdbService;
+            _transcriptionService = transciptionService;
             Logger = logger;
 
             AddDialog(searchDialog);

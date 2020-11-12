@@ -20,7 +20,6 @@ namespace Mov4Anyone.Cards
 
         public PromptOptions GenerateMovieSearchAttachment(SearchResult<MovieResult> movieResults)
         {
-
             var paths = new[] { ".", "Cards" ,"searchTemplate.json" };
             
             var adaptiveCardJson = File.ReadAllText(Path.Combine(paths));

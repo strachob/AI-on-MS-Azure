@@ -12,6 +12,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
+using Mov4Anyone.Services;
 using Newtonsoft.Json;
 
 namespace Mov4Anyone.Bots
@@ -19,8 +20,8 @@ namespace Mov4Anyone.Bots
     public class DialogAndWelcomeBot<T> : DialogBot<T>
         where T : Dialog
     {
-        public DialogAndWelcomeBot(ConversationState conversationState, UserState userState, T dialog, ILogger<DialogBot<T>> logger)
-            : base(conversationState, userState, dialog, logger)
+        public DialogAndWelcomeBot(ConversationState conversationState, UserState userState, T dialog, ILogger<DialogBot<T>> logger, TransciptionService transciptionService)
+            : base(conversationState, userState, dialog, logger, transciptionService)
         {
         }
 

@@ -107,7 +107,7 @@ namespace Mov4Anyone.Dialogs
             {
                 choiceResult = JsonConvert.DeserializeObject<SearchModel>(stepContext.Context.Activity.Value.ToString());
             }
-            catch (NullReferenceException)
+            catch (Exception)
             {
                 if (stepContext.Result is string text)
                 {

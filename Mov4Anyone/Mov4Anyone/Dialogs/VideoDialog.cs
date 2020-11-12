@@ -59,7 +59,7 @@ namespace Mov4Anyone.Dialogs
                     }
                     else
                     {
-                        var promptMessage = MessageFactory.Text("What movie would you like to see?", "What movie would you like to see?", InputHints.ExpectingInput);
+                        var promptMessage = MessageFactory.Text("Please repeat the name of the movie", "Please repeat the name of the movie", InputHints.ExpectingInput);
                         return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
                     }
                     break;
@@ -77,7 +77,7 @@ namespace Mov4Anyone.Dialogs
                     }
                     else
                     {
-                        var promptMessage = MessageFactory.Text("What tv show would you like to see?", "What tv show would you like to see?", InputHints.ExpectingInput);
+                        var promptMessage = MessageFactory.Text("Please repeat the name of the show", "Please repeat the name of the movie", InputHints.ExpectingInput);
                         return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
                     }
 
