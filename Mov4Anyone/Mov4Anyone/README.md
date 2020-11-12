@@ -1,99 +1,92 @@
 # Mov4Anyone
 
-Bot Framework v4 core bot sample.
+### 1. Wstęp
 
-This bot has been created using [Bot Framework](https://dev.botframework.com), it shows how to:
+Mov4Anyone jest botem przygotowanym dla ludzi, którzy chcą sprawdzić informacje na temat filmów, seriali czy osób pracujących w biznesie kinowym.
 
-- Use [LUIS](https://www.luis.ai) to implement core AI capabilities
-- Implement a multi-turn conversation using Dialogs
-- Handle user interruptions for such things as `Help` or `Cancel`
-- Prompt for and validate requests for information from the user
+Bot działa najlepiej przeglądając informacje o Hollywood aczkolwiek polskie nazwiska też da się tam znaleźć.
 
-## Prerequisites
+Bot został stworzony z użyciem Microsoft Bot Framework oraz przykładowego kodu [Link](https://github.com/microsoft/BotBuilder-Samples/tree/main/samples/csharp_dotnetcore/13.core-bot) z repozytorium Microsoftu.
 
-This sample **requires** prerequisites in order to run.
+Bot używa trzech zewnętrznych serwisów:
 
-### Overview
+1. TMDB API - api serwisu z bazą danych o filmach i biznesie.
 
-This bot uses [LUIS](https://www.luis.ai), an AI based cognitive service, to implement language understanding.
+2. LUIS - rozpoznawanie intencji użytkownika wraz z encjami w celu znalezienia potrzebnych informacji 
 
-### Install .NET Core CLI
+3. Speech to text - serwis potrzebny do transkrypcji mowy na zapytania do bota. Brak konieczności wpisywania wszystkiego z klawiatury.
 
-- [.NET Core SDK](https://dotnet.microsoft.com/download) version 3.1
+   #### Demo
 
-  ```bash
-  # determine dotnet version
-  dotnet --version
-  ```
+   Link do dema bota w serwisie Youtube: [Youtube](https://youtu.be/wfi6MjV4kuA)
 
-- If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/).
-- Install the latest version of the [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest) tool. Version 2.0.54 or higher.
+### 2. Wprowadzanie zapytań za pomocą głosu
 
-### Create a LUIS Application to enable language understanding
+W każdym momencie bot daje nam możliwość wprowadzenia naszego zapytania za pomocą głosu. 
 
-The LUIS model for this example can be found under `CognitiveModels/FlightBooking.json` and the LUIS language model setup, training, and application configuration steps can be found [here](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-v4-luis?view=azure-bot-service-4.0&tabs=cs).
+Można to zrobić przy użyciu przycisku "Tap to speek". Wtedy bot oczekuje na wprowadzenie przez nas głosu.
 
-Once you created the LUIS model, update `appsettings.json` with your `LuisAppId`, `LuisAPIKey` and `LuisAPIHostName`.
+Po 3 sekundach od końca zdania zapytanie nasza mowa jest transkrybowana na tekst który dalej używany jest w dialogu.
 
-```json
-  "LuisAppId": "Your LUIS App Id",
-  "LuisAPIKey": "Your LUIS Subscription key here",
-  "LuisAPIHostName": "Your LUIS App region here (i.e: westus.api.cognitive.microsoft.com)"
-```
 
-## To try this sample
 
-- In a terminal, navigate to `Mov4Anyone`
+### 3. Przykładowy przypadek użycia
 
-    ```bash
-    # change into project folder
-    cd Mov4Anyone
-    ```
+1. Uruchamiany bota
 
-- Run the bot from a terminal or from Visual Studio, choose option A or B.
+2. Pytamy "Is there a movie called The lord of the rings"?
 
-  A) From a terminal
+3. Bot wyświetla 5 propozycji filmów o które mogło nam chodzić
 
-  ```bash
-  # run the bot
-  dotnet run
-  ```
+4. Wybieramy pierwszą opcję od góry
 
-  B) Or from Visual Studio
+5. Bot wyświetla nam detale tego filmu (The lord of the rings: The fellowship of the rings)
 
-  - Launch Visual Studio
-  - File -> Open -> Project/Solution
-  - Navigate to `Mov4Anyone` folder
-  - Select `Mov4Anyone.csproj` file
-  - Press `F5` to run the project
+6. Wpisujemy "I would like to see trailer for The lord of the rings movie"
 
-## Testing the bot using Bot Framework Emulator
+7. Bot wyświetla nam zwiastun z serwisu youtube
 
-[Bot Framework Emulator](https://github.com/microsoft/botframework-emulator) is a desktop application that allows bot developers to test and debug their bots on localhost or running remotely through a tunnel.
+   
 
-- Install the Bot Framework Emulator version 4.5.0 or greater from [here](https://github.com/Microsoft/BotFramework-Emulator/releases)
+### 4. Jak projekt został stworzony?
 
-### Connect to the bot using Bot Framework Emulator
+1. Stworzenie projektu w .NET Core 3.1 z przykładu podanego w punkcie 1.
+2. W portalu Azure utworzenie zasobu LUIS
+3. Dodanie do LUIS potrzebnych intencji oraz encji -> wytrenowanie modelu oraz wystawienie endpointów (Publish production)
+4. Integracja LUISa z projektem w .Net Core [Link](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-v4-luis?view=azure-bot-service-4.0&tabs=csharp#configure-your-bot-to-use-your-luis-app)
+5. Wygenerowanie klucza do TMDB oraz integracja potrzbenych zapytań i modeli do serwisu w .NET Core [Link](https://developers.themoviedb.org/3/getting-started/introduction)
+6. Utworzenie okienek które bot zwraca z informacjami z użyciem Adaptive Cards
+7. Utworzenie zasobu Speech w portalu Azure oraz integracja z .NET Core [Link](https://docs.microsoft.com/en-us/learn/modules/transcribe-speech-input-text/7-optional-exercise-listen-incoming-data)
 
-- Launch Bot Framework Emulator
-- File -> Open Bot
-- Enter a Bot URL of `http://localhost:3978/api/messages`
 
-## Deploy the bot to Azure
 
-To learn more about deploying a bot to Azure, see [Deploy your bot to Azure](https://aka.ms/azuredeployment) for a complete list of deployment instructions.
+### 5.  Jak go postawić u siebie?
 
-## Further reading
+1. Zainstalować środowisko .Net Core w wersji 3.1
 
-- [Bot Framework Documentation](https://docs.botframework.com)
-- [Bot Basics](https://docs.microsoft.com/azure/bot-service/bot-builder-basics?view=azure-bot-service-4.0)
-- [Dialogs](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-dialog?view=azure-bot-service-4.0)
-- [Gathering Input Using Prompts](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-prompts?view=azure-bot-service-4.0&tabs=csharp)
-- [Activity processing](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-activity-processing?view=azure-bot-service-4.0)
-- [Azure Bot Service Introduction](https://docs.microsoft.com/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)
-- [Azure Bot Service Documentation](https://docs.microsoft.com/azure/bot-service/?view=azure-bot-service-4.0)
-- [.NET Core CLI tools](https://docs.microsoft.com/en-us/dotnet/core/tools/?tabs=netcore2x)
-- [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest)
-- [Azure Portal](https://portal.azure.com)
-- [Language Understanding using LUIS](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/)
-- [Channels and Bot Connector Service](https://docs.microsoft.com/en-us/azure/bot-service/bot-concepts?view=azure-bot-service-4.0)
+2. Zainstalować Bot Framework Emulator w najnowszej wersji
+
+3. Pobrać repozytorium z kodem
+
+4. Wystawiamy usługę Luis z użyciem pliku .**json** znajdującego się w folderze *CognitiveModels* 
+
+5. Otworzyć plik appsettings.json i zmienić dane zamieszczone poniżej
+
+   ```json
+   {
+     "TMDB_Key": "<Klucz wygenerowany na TMDB>",
+     "LuisAppId": "<Klucz z LUISa - AppId>",
+     "LuisAPIKey": "<Klucz z LUISa z zakładki Authoring>",
+     "LuisAPIHostName": "<your_region>.api.cognitive.microsoft.com",
+     "Speech_Key": "<Klucz do usługi Speech z Portalu Azure>"
+   }
+   ```
+
+6. Uruchomić lokalnie 
+
+7. Włączyć Emulator i połączyć się z http://localhost:3978/api/messages
+
+
+
+
+
