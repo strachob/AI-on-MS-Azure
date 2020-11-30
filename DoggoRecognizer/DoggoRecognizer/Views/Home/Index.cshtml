@@ -1,8 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model PhotoPost
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Doggo Recognizer</h1>
+    <p>This service let's you upload a photo of a dog and you'll find out which breed is it. <br> We'll throw some more info of this breed for you.</p>
 </div>
+
+
+<form asp-action="PhotoUploaded" enctype="multipart/form-data" method="post" >
+    <dl class="form-group">
+        <dt>
+            <label asp-for="MyImage">Put a dog image here</label>
+        </dt>
+        <dd>
+            <input asp-for="MyImage" type="file" >
+            <span asp-validation-for="MyImage"></span>
+        </dd>
+    </dl>
+    <input class="btn btn-info" type="submit" value="Upload" />
+</form>

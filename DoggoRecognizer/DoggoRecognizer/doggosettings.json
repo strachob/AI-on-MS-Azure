@@ -1,0 +1,104 @@
+{
+  "DogRaceSettings": [
+    {
+      "Name": "Affenpinscher",
+      "Id": 1,
+      "WikiPage": "https://dogtime.com/dog-breeds/affenpinscher"
+    },
+    {
+      "Name": "Airedale",
+      "Id": 4,
+      "WikiPage": "https://dogtime.com/dog-breeds/airedale-terrier"
+    },
+    {
+      "Name": "Akita",
+      "Id": 6,
+      "WikiPage": "https://dogtime.com/dog-breeds/akita"
+    },
+    {
+      "Name": "AustralianCattledog",
+      "Id": 21,
+      "WikiPage": "https://dogtime.com/dog-breeds/australian-cattle-dog"
+    },
+    {
+      "Name": "Beagle",
+      "Id": 31,
+      "WikiPage": "https://dogtime.com/dog-breeds/beagle"
+    },
+    {
+      "Name": "Borzoi",
+      "Id": 0,
+      "WikiPage": "https://dogtime.com/dog-breeds/borzoi"
+    },
+    {
+      "Name": "Boxer",
+      "Id": 55,
+      "WikiPage": "https://dogtime.com/dog-breeds/boxer"
+    },
+    {
+      "Name": "Bulldog",
+      "Id": 10,
+      "WikiPage": "https://dogtime.com/dog-breeds/bulldog"
+    },
+    {
+      "Name": "Cairn",
+      "Id": 65,
+      "WikiPage": "https://dogtime.com/dog-breeds/cairn-terrier"
+    },
+    {
+      "Name": "Chihuahua",
+      "Id": 0,
+      "WikiPage": "https://dogtime.com/dog-breeds/chihuahua"
+    },
+    {
+      "Name": "Collie",
+      "Id": 50,
+      "WikiPage": "https://dogtime.com/dog-breeds/collie"
+    },
+    {
+      "Name": "Dalmatian",
+      "Id": 92,
+      "WikiPage": "https://dogtime.com/dog-breeds/dalmatian"
+    },
+    {
+      "Name": "GoldenRetriever",
+      "Id": 121,
+      "WikiPage": "https://dogtime.com/dog-breeds/golden-retriever"
+    },
+    {
+      "Name": "Newfoundland",
+      "Id": 171,
+      "WikiPage": "https://dogtime.com/dog-breeds/newfoundland"
+    },
+    {
+      "Name": "Pomeranian",
+      "Id": 193,
+      "WikiPage": "https://dogtime.com/dog-breeds/pomeranian"
+    },
+    {
+      "Name": "Samoyed",
+      "Id": 214,
+      "WikiPage": "https://dogtime.com/dog-breeds/samoyed"
+    },
+    {
+      "Name": "ShihTzu",
+      "Id": 223,
+      "WikiPage": "https://dogtime.com/dog-breeds/shih-tzu"
+    },
+    {
+      "Name": "SiberianHusky",
+      "Id": 226,
+      "WikiPage": "https://dogtime.com/dog-breeds/siberian-husky"
+    },
+    {
+      "Name": "TibetanMastiff",
+      "Id": 244,
+      "WikiPage": "https://dogtime.com/dog-breeds/tibetan-mastiff"
+    },
+    {
+      "Name": "Vizsla",
+      "Id": 251,
+      "WikiPage": "https://dogtime.com/dog-breeds/vizsla"
+    }
+  ]
+}
