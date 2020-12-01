@@ -12,12 +12,14 @@ namespace DoggoRecognizer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly DogAPIService _service;
+        private readonly DogAPIService _dogService;
+        private readonly CustomVisionService _visionService;
 
-        public HomeController(ILogger<HomeController> logger, DogAPIService service)
+        public HomeController(ILogger<HomeController> logger, DogAPIService service, CustomVisionService customVision)
         {
             _logger = logger;
-            _service = service;
+            _dogService = service;
+            _visionService = customVision;
         }
 
         public IActionResult Index()
@@ -27,21 +29,18 @@ namespace DoggoRecognizer.Controllers
 
         public async Task<IActionResult> PhotoUploaded(PhotoPost post)
         {
-            post.ImageCaption = post.UploadedImage.FileName;
-
-            string imageString = "";
-            if (post.UploadedImage.Length > 0)
+            var predictedBreed = await _visionService.PredictBreed(post.UploadedImage);
+            if (!predictedBreed.Equals("None"))
             {
-                using (var ms = new MemoryStream())
-                {
-                    post.UploadedImage.CopyTo(ms);
-                    var fileBytes = ms.ToArray();
-                    imageString = Convert.ToBase64String(fileBytes);
-                }
+                post.DogInfoModel = await _dogService.FetchBreedInfo(predictedBreed);
             }
-            
-            post.DogInfoModel = await _service.FetchBreedInfo("Akita");
-            post.DogInfoModel.Image = $"data:image/jpeg;base64,{imageString}";
+            else
+            {
+                post.DogInfoModel = new DogInfoModel();
+                post.DogInfoModel.IsValid = false;
+            }
+            post.ImageCaption = post.UploadedImage.FileName;
+            post.DogInfoModel.Image = $"data:image/jpeg;base64,{_dogService.ChangeImageToBase64(post.UploadedImage)}";
             post.ShowInfo = true;
             return View("Index", post);
         }

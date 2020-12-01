@@ -27,6 +27,7 @@ namespace DoggoRecognizer
             services.AddControllersWithViews();
 
             services.AddSingleton<DogAPIService>();
+            services.AddSingleton<CustomVisionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

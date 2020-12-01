@@ -5,25 +5,49 @@
     <div class="row">
         <img height="600" src="@Model.Image" alt="Pic" />
     </div>
-    <div class="row mt-1">
-        <p>The breed is: <strong>@Model.ApiInfo.Name</strong></p>
-    </div>
-    <div class="row">
-        <p>The breed originates from: <strong>@Model.ApiInfo.Origin</strong></p>
-    </div>
-    <div class="row">
-        <p>Dogs the breed were bred for: <strong>@Model.ApiInfo.BredFor</strong></p>
-    </div>
-    <div class="row">
-        <p>Is comes from group: <strong>@Model.ApiInfo.BreedGroup</strong></p>
-    </div>
-    <div class="row">
-        <p>The height varies: <strong>@Model.ApiInfo.Height.Metric cm (@Model.ApiInfo.Height.Imperial")</strong></p>
-    </div>
-    <div class="row">
-        <p>The weight varies: <strong>@Model.ApiInfo.Weight.Metric kg (@Model.ApiInfo.Weight.Imperial lbs)</strong></p>
-    </div>
-    <div class="row">
-        <p>Want to know more? Click <strong><a href="@Model.WikiPath" >here</a></strong></p>
-    </div>
+    @if (Model.IsValid)
+    {
+        <div class="row mt-1">
+            <p>The breed is: <strong>@Model.ApiInfo.Name</strong></p>
+        </div>
+        @if (Model.BreedId != 0)
+        {
+            <div class="row">
+                <p>The breed originates from: <strong>@Model.ApiInfo.Origin</strong></p>
+            </div>
+            <div class="row">
+                <p>Temperament: <strong>@Model.ApiInfo.Temperament</strong></p>
+            </div>
+            <div class="row">
+                <p>Those dogs were bred for: <strong>@Model.ApiInfo.BredFor</strong></p>
+            </div>
+            <div class="row">
+                <p>Is comes from group: <strong>@Model.ApiInfo.BreedGroup</strong></p>
+            </div>
+            <div class="row">
+                <p>The height varies: <strong>@Model.ApiInfo.Height.Metric cm (@Model.ApiInfo.Height.Imperial")</strong></p>
+            </div>
+            <div class="row">
+                <p>The weight varies: <strong>@Model.ApiInfo.Weight.Metric kg (@Model.ApiInfo.Weight.Imperial lbs)</strong></p>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <p>I couldn't fetch more information about the breed but please see the link below</p>
+            </div>
+        }
+        <div class="row">
+            <p>Want to know more? Click <strong><a href="@Model.WikiPath">here</a></strong></p>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <p>I am not sure there is a dog in the picture. Try another one</p>
+        </div>
+    }
+
+
+
 </div>
