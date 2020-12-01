@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DoggoRecognizer.Models;
 using DoggoRecognizer.Services;
+using System.IO;
 
 namespace DoggoRecognizer.Controllers
 {
@@ -26,10 +25,25 @@ namespace DoggoRecognizer.Controllers
             return View(new PhotoPost());
         }
 
-        public IActionResult PhotoUploaded(PhotoPost post)
+        public async Task<IActionResult> PhotoUploaded(PhotoPost post)
         {
-            post.ImageCaption = post.MyImage.FileName;
-            return null;
+            post.ImageCaption = post.UploadedImage.FileName;
+
+            string imageString = "";
+            if (post.UploadedImage.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    post.UploadedImage.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    imageString = Convert.ToBase64String(fileBytes);
+                }
+            }
+            
+            post.DogInfoModel = await _service.FetchBreedInfo("Akita");
+            post.DogInfoModel.Image = $"data:image/jpeg;base64,{imageString}";
+            post.ShowInfo = true;
+            return View("Index", post);
         }
 
         public IActionResult Author()

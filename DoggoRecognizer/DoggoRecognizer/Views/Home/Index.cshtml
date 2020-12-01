@@ -9,15 +9,20 @@
 </div>
 
 
-<form asp-action="PhotoUploaded" enctype="multipart/form-data" method="post" >
+<form asp-action="PhotoUploaded" enctype="multipart/form-data" method="post">
     <dl class="form-group">
         <dt>
-            <label asp-for="MyImage">Put a dog image here</label>
+            <label asp-for="UploadedImage">Put a dog image here</label>
         </dt>
         <dd>
-            <input asp-for="MyImage" type="file" >
-            <span asp-validation-for="MyImage"></span>
+            <input asp-for="UploadedImage" type="file">
+            <span asp-validation-for="UploadedImage"></span>
         </dd>
     </dl>
     <input class="btn btn-info" type="submit" value="Upload" />
 </form>
+
+@if (Model.ShowInfo)
+{
+    <partial name="_DogInformation" model="Model.DogInfoModel" />
+}

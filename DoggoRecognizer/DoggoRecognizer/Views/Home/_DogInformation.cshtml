@@ -1,0 +1,29 @@
+﻿
+@model DogInfoModel
+
+<div class="container mt-3" style="font-size:160%;">
+    <div class="row">
+        <img height="600" src="@Model.Image" alt="Pic" />
+    </div>
+    <div class="row mt-1">
+        <p>The breed is: <strong>@Model.ApiInfo.Name</strong></p>
+    </div>
+    <div class="row">
+        <p>The breed originates from: <strong>@Model.ApiInfo.Origin</strong></p>
+    </div>
+    <div class="row">
+        <p>Dogs the breed were bred for: <strong>@Model.ApiInfo.BredFor</strong></p>
+    </div>
+    <div class="row">
+        <p>Is comes from group: <strong>@Model.ApiInfo.BreedGroup</strong></p>
+    </div>
+    <div class="row">
+        <p>The height varies: <strong>@Model.ApiInfo.Height.Metric cm (@Model.ApiInfo.Height.Imperial")</strong></p>
+    </div>
+    <div class="row">
+        <p>The weight varies: <strong>@Model.ApiInfo.Weight.Metric kg (@Model.ApiInfo.Weight.Imperial lbs)</strong></p>
+    </div>
+    <div class="row">
+        <p>Want to know more? Click <strong><a href="@Model.WikiPath" >here</a></strong></p>
+    </div>
+</div>
