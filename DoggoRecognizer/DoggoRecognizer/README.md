@@ -4,6 +4,8 @@
 
 DoggoRecognizer jest prostym serwisem przygotowanym dla ludzi, którzy uwielbiają psy (pjeski) lub nie są pewni czy pies którego widzą należy do jakiejś rasy. Idea serwisu jest bardzo prosta. Wybierz zdjęcie psa, które chcesz sprawdzić a serwis powie Ci jakiej rasy jest pies i dostarczy trochę informacji na temat tej rasy wraz z linkiem do strony gdzie znaleźć można jeszcze więcej informacji.
 
+Na chwilę obecną serwis obsługuje 20 ras, lecz skalowalność systemu jest bardzo duża.
+
 Serwis używa dwóch innych usług:
 
 1. Custom Vision Prediction API - główna usługa na podstawie której serwis został wyuczony. Na postawie wielu zdjęć różnych ras psów nauczony został model kognitywny, który potrafi zaklasyfikować psa do odpowiedniej rasy wraz z jakimś prawdopodobieństwem.
